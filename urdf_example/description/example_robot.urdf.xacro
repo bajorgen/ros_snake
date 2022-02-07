@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+
+    <!-- This is an example of a URDF. -->
+    <!-- As we move through the file, new things to note will be pointed out. -->
+    <!-- It's not meant an example of GOOD design, but an example of some of the various features of URDF/xacro. -->
+
+
+
+    <!-- This will include all the contents of example_include.xacro first. Go check it out! -->
+    <xacro:include filename="example_include.xacro" />
+
+
+
+    <!-- This first link called "world" is empty 
+    <link name="world"></link> 
+
+    <joint name="base_joint" type="fixed">
+        <origin xyz="1.0 1.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="world"/>
+        <child link="link_1"/>
+    </joint>
+-->
+
+    <!-- - We use the "property" feature to define the arm length and radius and use them multiple times -->
+    <!-- - The visual/collision origin is set to halfway along the length (similar to the box), but also with a rotation (again using the mathematical features). -->
+    <!--   This is because the cylinder extends along the Z axis by default, but we want it to be along the X axis (when the joint is at 0) -->
+
+    <xacro:property name="length" value="0.5" />
+    <xacro:property name="radius" value="0.1" />
+    <xacro:property name="mass" value="14 "/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="${length/2} 0 ${radius}" rpy="0 ${pi/2} 0"/>
+            <geometry>                
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+            <material name="orange" />
+        </visual>
+        <collision>
+            <origin xyz="${length/2} 0 ${radius}" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${mass}" length="${length}" radius="${radius}">
+            <origin xyz="${length/2} 0 ${radius}" rpy="0 ${pi/2} 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+ 
+    <joint name="joint_12" type="revolute">
+        <origin xyz="${length} 0 ${radius}" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="link_2"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-pi/2}" upper="${pi/2}" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="link_2">
+        <visual>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>                
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${mass}" length="${length}" radius="${radius}">
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+
+    <joint name="joint_23" type="revolute">
+        <origin xyz="${length} 0 0" rpy="0 0 0"/>
+        <parent link="link_2"/>
+        <child link="link_3"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-pi/2}" upper="${pi/2}" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="link_3">
+        <visual>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>                
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${mass}" length="${length}" radius="${radius}">
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+
+
+    <joint name="joint_34" type="revolute">
+        <origin xyz="${length} 0 0" rpy="0 0 0"/>
+        <parent link="link_3"/>
+        <child link="link_4"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-pi/2}" upper="${pi/2}" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="link_4">
+        <visual>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>                
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${mass}" length="${length}" radius="${radius}">
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+
+
+    <joint name="joint_45" type="revolute">
+        <origin xyz="${length} 0 0" rpy="0 0 0"/>
+        <parent link="link_4"/>
+        <child link="link_5"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-pi/2}" upper="${pi/2}" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="link_5">
+        <visual>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>                
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="${length}" radius="${radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${mass}" length="${length}" radius="${radius}">
+            <origin xyz="${length/2} 0 0" rpy="0 ${pi/2} 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <xacro:include filename="example_gazebo.xacro" />
+
+
+</robot>
